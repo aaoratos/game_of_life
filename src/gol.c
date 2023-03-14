@@ -45,10 +45,13 @@ uint8_t cell_count_neighbors(BoardPtr board, size_t cell_y, size_t cell_x) {
 uint8_t cell_calc_new_state(BoardPtr board, size_t cell_y, size_t cell_x) {
     uint8_t current_state = board[cell_y][cell_x];
     uint8_t score = cell_count_neighbors(board, cell_y, cell_x);
+
     /* Any live cell with two or three live neighbours survives. */
     if (current_state == ALIVE && (score == 2 || score == 3)) return ALIVE;
+
     /* Any dead cell with three live neighbours becomes a live cell. */
     if (current_state == DEAD && score == 3) return ALIVE;
+
     /* All other live cells die in the next generation.
      * Similarly, all other dead cells stay dead. */
     return DEAD;
